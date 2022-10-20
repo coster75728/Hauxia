@@ -13,20 +13,7 @@ using Dapper;
 
 namespace WindowsFormsApp2
 {
-    public enum MerchntType
-    {
-        None,
-        RT,
-        SUPPLIER,
-        PART
-    }
 
-    public class AlarmModel {
-
-        public string PART_NO { get; set; }
-        public int PART_CNT { get; set; }
-        public int CurrentCnt { get; set; }
-    }
     public partial class Form1 : Form
     {
         private static string _conn = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -653,3 +640,19 @@ WHERE  a.PART_CNT>t1.cnt
 //        //user_Result1.Text = String.Join("\n", list);
 //    }
 //}
+
+public enum MerchntType
+{
+    None,
+    RT,
+    SUPPLIER,
+    PART
+}
+
+public class AlarmModel
+{
+
+    public string PART_NO { get; set; }
+    public int PART_CNT { get; set; }
+    public int CurrentCnt { get; set; }
+}
