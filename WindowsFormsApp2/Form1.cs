@@ -20,6 +20,13 @@ namespace WindowsFormsApp2
         SUPPLIER,
         PART
     }
+
+    public class AlarmModel {
+
+        public string PART_NO { get; set; }
+        public int PART_CNT { get; set; }
+        public int CurrentCnt { get; set; }
+    }
     public partial class Form1 : Form
     {
         private static string _conn = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
@@ -427,6 +434,46 @@ namespace WindowsFormsApp2
         private void button4_Click(object sender, EventArgs e)
         {
             FormContext.Current.Logout();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            string sql = @"
+SELECT a.PART_NO,a.PART_CNT,t1.CurrentCnt
+FROM PART_LNK_ALARM a
+INNER JOIN (
+	SELECT COUNT(SELF_SN) CurrentCnt,PART_NO
+	FROM [MYDB].[dbo].[PART_LNK]
+	GROUP BY PART_NO
+) t1 ON a.PART_NO = t1.PART_NO 
+WHERE  a.PART_CNT>t1.CurrentCnt
+";
+            using (var conn = new SqlConnection(_conn))
+            {
+                conn.Open();
+                var res=conn.Query<AlarmModel>(sql);
+                foreach (var item in res)
+                {
+                    sb.AppendLine($"PART_NO;{item.PART_NO} CurrentCnt; {item.CurrentCnt}  PART_CNT; {item.PART_CNT}");
+                }
+            }
+
+            MessageBox.Show(sb.ToString());
+            /*
+             
+SELECT * 
+FROM PART_LNK_ALARM a
+INNER JOIN (
+	SELECT COUNT(SELF_SN) cnt,PART_NO
+	FROM [MYDB].[dbo].[PART_LNK]
+	GROUP BY PART_NO
+) t1 ON a.PART_NO = t1.PART_NO 
+WHERE  a.PART_CNT>t1.cnt
+
+             */
+
+
         }
     }
 }
