@@ -436,17 +436,21 @@ INNER JOIN (
 ) t1 ON a.PART_NO = t1.PART_NO 
 WHERE  a.PART_CNT>t1.CurrentCnt
 ";
+
             using (var conn = new SqlConnection(_conn))
             {
                 conn.Open();
-                var res=conn.Query<AlarmModel>(sql);
-                foreach (var item in res)
-                {
-                    sb.AppendLine($"PART_NO;{item.PART_NO} CurrentCnt; {item.CurrentCnt}  PART_CNT; {item.PART_CNT}");
-                }
-            }
+                var res = conn.Query<AlarmModel>(sql);
+                datagv1.DataSource = res;
+                //list.AddRange(res.Select(x => $"PART_NO;{x.PART_NO} CurrentCnt; {x.CurrentCnt}  PART_CNT; {x.PART_CNT}"));
+                //foreach (var item in res)
+                //{
+                //    sb.AppendLine($"PART_NO;{item.PART_NO} CurrentCnt; {item.CurrentCnt}  PART_CNT; {item.PART_CNT}");
+                //}.
 
-            MessageBox.Show(sb.ToString());
+            }
+           
+            //MessageBox.Show(sb.ToString());
             /*
              
 SELECT * 
@@ -640,6 +644,7 @@ WHERE  a.PART_CNT>t1.cnt
 //        //user_Result1.Text = String.Join("\n", list);
 //    }
 //}
+
 
 public enum MerchntType
 {
