@@ -13,34 +13,66 @@ using Dapper;
 
 namespace WindowsFormsApp2
 {
-
+    
     public partial class Form1 : Form
     {
         private static string _conn = ConfigurationManager.ConnectionStrings["DbConn"].ConnectionString;
         private MerchntType _merchntType;
         List<TextBox> textboxs = new List<TextBox>();
+        Dictionary<string, TextBox> textboxDictionary;
 
         public Form1()
         {
             InitializeComponent();
 
-            textboxs.Add(textBox1);
-            textboxs.Add(textBox2);
-            textboxs.Add(textBox3);
-            textboxs.Add(textBox4);
-            textboxs.Add(textBox5);
-            textboxs.Add(textBox6);
-            textboxs.Add(textBox7);
-            textboxs.Add(textBox8);
-            textboxs.Add(textBox9);
-            textboxs.Add(textBox10);
-            textboxs.Add(textBox11);
-            textboxs.Add(textBox12);
-            textboxs.Add(textBox13);
+            textboxs.Add(txt_rt_no);
+            textboxs.Add(txt_supplier_code);
+            textboxs.Add(txt_emp);
+            textboxs.Add(txt_item_no);
+            textboxs.Add(txt_part_no);
+            textboxs.Add(txt_item_qty);
+            textboxs.Add(txt_datecode);
+            textboxs.Add(txt_lotcode);
+            textboxs.Add(txt_po_no);
+            textboxs.Add(txt_po_item);
+            textboxs.Add(txt_self_sn);
+            textboxs.Add(txt_intcoming_qty);
+            textboxs.Add(txt_issue_no);
+
+            textboxDictionary=textboxs.ToDictionary(textbox => textbox.Name.Replace("txt_", ""), textbox => textbox);
 
             foreach (var textBox in textboxs)
             {
                 textBox.KeyPress += textBox_KeyPress;
+            }
+            /*
+               --廠商明細 = RT_BASE
+  --收料單明細 = RT_DETAIL
+  --料號連結 =  PART_LNK
+
+             */
+
+            chb_01.DataSource = new[] {
+                 "RT_BASE",
+                 "RT_DETAIL",
+                 "PART_LNK"
+            };
+        }
+
+
+        private IEnumerable<string> GetShowColumns(string tableName) {
+            string sql = @"SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = @TABLE_NAME";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("TABLE_NAME", tableName, DbType.AnsiString);
+
+            using (var conn = new SqlConnection(_conn))
+            {
+                //打開與資料庫的連接
+                conn.Open();
+                return conn.Query<string>(sql, parameters);
             }
         }
 
@@ -246,23 +278,23 @@ namespace WindowsFormsApp2
         }
         private void button7_Click(object sender, EventArgs e)
         {
-            string VAL1 = textBox1.Text;             //RT_NO
-            string VAL2 = textBox2.Text;             //SUPPLIER_CODE
-            string VAL3 = textBox3.Text;             //EMP
+            string VAL1 = txt_rt_no.Text;             //RT_NO
+            string VAL2 = txt_supplier_code.Text;             //SUPPLIER_CODE
+            string VAL3 = txt_emp.Text;             //EMP
             DateTime VALA = DateTime.Now.Date;            //UPDATE_TIME 
-            string VAL4 = textBox4.Text;             //ITEM_NO
-            string VAL5 = textBox5.Text;             //PART_NO
-            string VAL6 = textBox6.Text;             //ITEM_QTY
-            string VAL7 = textBox7.Text;             //DATECODE
-            string VAL8 = textBox8.Text;             //LOTCODE
-            string VAL9 = textBox9.Text;             //PO_NO
-            string VAL10 = textBox10.Text;           //PO_ITEM
+            string VAL4 = txt_item_no.Text;             //ITEM_NO
+            string VAL5 = txt_part_no.Text;             //PART_NO
+            string VAL6 = txt_item_qty.Text;             //ITEM_QTY
+            string VAL7 = txt_datecode.Text;             //DATECODE
+            string VAL8 = txt_lotcode.Text;             //LOTCODE
+            string VAL9 = txt_po_no.Text;             //PO_NO
+            string VAL10 = txt_po_item.Text;           //PO_ITEM
             DateTime VALB = DateTime.Now.Date;             //INCOMING_TIME
-            string VAL11 = textBox11.Text;           //SELF_SN
+            string VAL11 = txt_self_sn.Text;           //SELF_SN
             DateTime VALC = DateTime.Now.Date;             //INCOMING_TIME
-            string VAL12 = textBox12.Text;           //INCOMING_QTY
+            string VAL12 = txt_intcoming_qty.Text;           //INCOMING_QTY
             DateTime VALD = DateTime.Now.Date;             //UPDATE_TIME
-            string VAL13 = textBox13.Text;           //ISSUE_NO
+            string VAL13 = txt_issue_no.Text;           //ISSUE_NO
 
 
             MessageBox.Show("新增成功");
@@ -380,10 +412,12 @@ namespace WindowsFormsApp2
                 textBox.Clear();
             }
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (FormContext.Current.UserContent.RoleType == RoleType.User)
@@ -461,6 +495,59 @@ WHERE  a.PART_CNT>t1.cnt
              */
 
 
+        }
+
+        private void chb_01_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var showColumns = GetShowColumns(chb_01.SelectedValue.ToString()).Select(x=>x.ToLower());
+
+            foreach (var item in textboxDictionary)
+            {
+                if (showColumns.Any(x=>x== item.Key))
+                {
+                    item.Value.ReadOnly = false;
+                }
+                else
+                {
+                    item.Value.ReadOnly = true;
+                    item.Value.Text = String.Empty;
+                }
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var showColumns = GetShowColumns(chb_01.SelectedValue.ToString()).Select(x => x.ToLower());
+            DynamicParameters parameters = new DynamicParameters();
+            string sql = $@"SELECT *
+FROM {chb_01.SelectedValue}
+WHERE 1=1";
+            foreach (var item in textboxDictionary)
+            {
+                if (showColumns.Any(x => x == item.Key) && !string.IsNullOrEmpty(item.Value.Text))
+                {
+                    parameters.Add(item.Key, item.Value.Text, DbType.AnsiString);
+                    sql += $" AND {item.Key} = @{item.Key}";
+                }
+            }
+
+            using (var conn = new SqlConnection(_conn))
+            {
+                //打開與資料庫的連接
+                conn.Open();
+                if (chb_01.SelectedValue.ToString() == "RT_BASE")
+                {
+                    datagv1.DataSource = conn.Query<DataModel1>(sql, parameters);
+                }
+                else if (chb_01.SelectedValue.ToString() == "RT_DETAIL")
+                {
+                    datagv1.DataSource = conn.Query<DataModel3>(sql, parameters);
+                }
+                else if (chb_01.SelectedValue.ToString() == "PART_LNK")
+                {
+                    datagv1.DataSource = conn.Query<DataModel5>(sql, parameters);
+                }
+            }
         }
     }
 }
@@ -656,3 +743,11 @@ public class AlarmModel
     public int PART_CNT { get; set; }
     public int CurrentCnt { get; set; }
 }
+
+
+
+//public class ComboItem
+//{
+//    public int ID { get; set; }
+//    public string Text { get; set; }
+//}

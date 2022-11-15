@@ -36,9 +36,9 @@
             this.datagv1 = new System.Windows.Forms.DataGridView();
             this.chb1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.button7 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txt_rt_no = new System.Windows.Forms.TextBox();
+            this.txt_supplier_code = new System.Windows.Forms.TextBox();
+            this.txt_emp = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -52,20 +52,23 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txt_item_no = new System.Windows.Forms.TextBox();
+            this.txt_part_no = new System.Windows.Forms.TextBox();
+            this.txt_item_qty = new System.Windows.Forms.TextBox();
+            this.txt_datecode = new System.Windows.Forms.TextBox();
+            this.txt_lotcode = new System.Windows.Forms.TextBox();
+            this.txt_po_no = new System.Windows.Forms.TextBox();
+            this.txt_po_item = new System.Windows.Forms.TextBox();
+            this.txt_self_sn = new System.Windows.Forms.TextBox();
+            this.txt_intcoming_qty = new System.Windows.Forms.TextBox();
+            this.txt_issue_no = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.chb_01 = new System.Windows.Forms.ComboBox();
+            this.button9 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.datagv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,9 +103,9 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button3.Location = new System.Drawing.Point(121, 4);
+            this.button3.Location = new System.Drawing.Point(141, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(120, 30);
+            this.button3.Size = new System.Drawing.Size(148, 30);
             this.button3.TabIndex = 9;
             this.button3.Text = "收料單明細";
             this.button3.UseVisualStyleBackColor = true;
@@ -111,7 +114,7 @@
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button5.Location = new System.Drawing.Point(236, 4);
+            this.button5.Location = new System.Drawing.Point(295, 4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(120, 30);
             this.button5.TabIndex = 10;
@@ -149,26 +152,26 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // textBox1
+            // txt_rt_no
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 68);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 17;
+            this.txt_rt_no.Location = new System.Drawing.Point(12, 68);
+            this.txt_rt_no.Name = "txt_rt_no";
+            this.txt_rt_no.Size = new System.Drawing.Size(100, 22);
+            this.txt_rt_no.TabIndex = 17;
             // 
-            // textBox2
+            // txt_supplier_code
             // 
-            this.textBox2.Location = new System.Drawing.Point(121, 68);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 22);
-            this.textBox2.TabIndex = 18;
+            this.txt_supplier_code.Location = new System.Drawing.Point(121, 68);
+            this.txt_supplier_code.Name = "txt_supplier_code";
+            this.txt_supplier_code.Size = new System.Drawing.Size(100, 22);
+            this.txt_supplier_code.TabIndex = 18;
             // 
-            // textBox3
+            // txt_emp
             // 
-            this.textBox3.Location = new System.Drawing.Point(278, 68);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 19;
+            this.txt_emp.Location = new System.Drawing.Point(278, 68);
+            this.txt_emp.Name = "txt_emp";
+            this.txt_emp.Size = new System.Drawing.Size(100, 22);
+            this.txt_emp.TabIndex = 19;
             // 
             // label1
             // 
@@ -301,75 +304,75 @@
             this.label13.TabIndex = 32;
             this.label13.Text = "Issue_No";
             // 
-            // textBox4
+            // txt_item_no
             // 
-            this.textBox4.Location = new System.Drawing.Point(386, 68);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 22);
-            this.textBox4.TabIndex = 33;
+            this.txt_item_no.Location = new System.Drawing.Point(386, 68);
+            this.txt_item_no.Name = "txt_item_no";
+            this.txt_item_no.Size = new System.Drawing.Size(100, 22);
+            this.txt_item_no.TabIndex = 33;
             // 
-            // textBox5
+            // txt_part_no
             // 
-            this.textBox5.Location = new System.Drawing.Point(492, 68);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 22);
-            this.textBox5.TabIndex = 34;
+            this.txt_part_no.Location = new System.Drawing.Point(492, 68);
+            this.txt_part_no.Name = "txt_part_no";
+            this.txt_part_no.Size = new System.Drawing.Size(100, 22);
+            this.txt_part_no.TabIndex = 34;
             // 
-            // textBox6
+            // txt_item_qty
             // 
-            this.textBox6.Location = new System.Drawing.Point(598, 68);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 22);
-            this.textBox6.TabIndex = 35;
+            this.txt_item_qty.Location = new System.Drawing.Point(598, 68);
+            this.txt_item_qty.Name = "txt_item_qty";
+            this.txt_item_qty.Size = new System.Drawing.Size(100, 22);
+            this.txt_item_qty.TabIndex = 35;
             // 
-            // textBox7
+            // txt_datecode
             // 
-            this.textBox7.Location = new System.Drawing.Point(704, 68);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 22);
-            this.textBox7.TabIndex = 36;
+            this.txt_datecode.Location = new System.Drawing.Point(704, 68);
+            this.txt_datecode.Name = "txt_datecode";
+            this.txt_datecode.Size = new System.Drawing.Size(100, 22);
+            this.txt_datecode.TabIndex = 36;
             // 
-            // textBox8
+            // txt_lotcode
             // 
-            this.textBox8.Location = new System.Drawing.Point(810, 68);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 22);
-            this.textBox8.TabIndex = 37;
+            this.txt_lotcode.Location = new System.Drawing.Point(810, 68);
+            this.txt_lotcode.Name = "txt_lotcode";
+            this.txt_lotcode.Size = new System.Drawing.Size(100, 22);
+            this.txt_lotcode.TabIndex = 37;
             // 
-            // textBox9
+            // txt_po_no
             // 
-            this.textBox9.Location = new System.Drawing.Point(12, 119);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(100, 22);
-            this.textBox9.TabIndex = 38;
+            this.txt_po_no.Location = new System.Drawing.Point(12, 119);
+            this.txt_po_no.Name = "txt_po_no";
+            this.txt_po_no.Size = new System.Drawing.Size(100, 22);
+            this.txt_po_no.TabIndex = 38;
             // 
-            // textBox10
+            // txt_po_item
             // 
-            this.textBox10.Location = new System.Drawing.Point(121, 119);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 22);
-            this.textBox10.TabIndex = 39;
+            this.txt_po_item.Location = new System.Drawing.Point(121, 119);
+            this.txt_po_item.Name = "txt_po_item";
+            this.txt_po_item.Size = new System.Drawing.Size(100, 22);
+            this.txt_po_item.TabIndex = 39;
             // 
-            // textBox11
+            // txt_self_sn
             // 
-            this.textBox11.Location = new System.Drawing.Point(227, 119);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(100, 22);
-            this.textBox11.TabIndex = 40;
+            this.txt_self_sn.Location = new System.Drawing.Point(227, 119);
+            this.txt_self_sn.Name = "txt_self_sn";
+            this.txt_self_sn.Size = new System.Drawing.Size(100, 22);
+            this.txt_self_sn.TabIndex = 40;
             // 
-            // textBox12
+            // txt_intcoming_qty
             // 
-            this.textBox12.Location = new System.Drawing.Point(333, 119);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 22);
-            this.textBox12.TabIndex = 41;
+            this.txt_intcoming_qty.Location = new System.Drawing.Point(333, 119);
+            this.txt_intcoming_qty.Name = "txt_intcoming_qty";
+            this.txt_intcoming_qty.Size = new System.Drawing.Size(100, 22);
+            this.txt_intcoming_qty.TabIndex = 41;
             // 
-            // textBox13
+            // txt_issue_no
             // 
-            this.textBox13.Location = new System.Drawing.Point(492, 119);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(100, 22);
-            this.textBox13.TabIndex = 42;
+            this.txt_issue_no.Location = new System.Drawing.Point(492, 119);
+            this.txt_issue_no.Name = "txt_issue_no";
+            this.txt_issue_no.Size = new System.Drawing.Size(100, 22);
+            this.txt_issue_no.TabIndex = 42;
             // 
             // button8
             // 
@@ -414,25 +417,47 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // chb_01
+            // 
+            this.chb_01.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.chb_01.FormattingEnabled = true;
+            this.chb_01.Location = new System.Drawing.Point(958, 22);
+            this.chb_01.Name = "chb_01";
+            this.chb_01.Size = new System.Drawing.Size(121, 20);
+            this.chb_01.TabIndex = 49;
+            this.chb_01.SelectedIndexChanged += new System.EventHandler(this.chb_01_SelectedIndexChanged);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(958, 66);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 50;
+            this.button9.Text = "報表查詢";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(926, 504);
+            this.ClientSize = new System.Drawing.Size(1198, 504);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.chb_01);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.textBox13);
-            this.Controls.Add(this.textBox12);
-            this.Controls.Add(this.textBox11);
-            this.Controls.Add(this.textBox10);
-            this.Controls.Add(this.textBox9);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txt_issue_no);
+            this.Controls.Add(this.txt_intcoming_qty);
+            this.Controls.Add(this.txt_self_sn);
+            this.Controls.Add(this.txt_po_item);
+            this.Controls.Add(this.txt_po_no);
+            this.Controls.Add(this.txt_lotcode);
+            this.Controls.Add(this.txt_datecode);
+            this.Controls.Add(this.txt_item_qty);
+            this.Controls.Add(this.txt_part_no);
+            this.Controls.Add(this.txt_item_no);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -446,9 +471,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txt_emp);
+            this.Controls.Add(this.txt_supplier_code);
+            this.Controls.Add(this.txt_rt_no);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.datagv1);
             this.Controls.Add(this.button5);
@@ -475,9 +500,9 @@
         private System.Windows.Forms.Label user_Result1;
         private System.Windows.Forms.DataGridView datagv1;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txt_rt_no;
+        private System.Windows.Forms.TextBox txt_supplier_code;
+        private System.Windows.Forms.TextBox txt_emp;
         private System.Windows.Forms.DataGridViewCheckBoxColumn chb1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -492,20 +517,23 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txt_item_no;
+        private System.Windows.Forms.TextBox txt_part_no;
+        private System.Windows.Forms.TextBox txt_item_qty;
+        private System.Windows.Forms.TextBox txt_datecode;
+        private System.Windows.Forms.TextBox txt_lotcode;
+        private System.Windows.Forms.TextBox txt_po_no;
+        private System.Windows.Forms.TextBox txt_po_item;
+        private System.Windows.Forms.TextBox txt_self_sn;
+        private System.Windows.Forms.TextBox txt_intcoming_qty;
+        private System.Windows.Forms.TextBox txt_issue_no;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ComboBox chb_01;
+        private System.Windows.Forms.Button button9;
     }
 }
 
