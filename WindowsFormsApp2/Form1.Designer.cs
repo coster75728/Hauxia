@@ -69,6 +69,9 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.chb_01 = new System.Windows.Forms.ComboBox();
             this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.part_no_txt = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.datagv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -437,11 +440,40 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(958, 210);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 51;
+            this.button10.Text = "button10";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // part_no_txt
+            // 
+            this.part_no_txt.Location = new System.Drawing.Point(958, 285);
+            this.part_no_txt.Name = "part_no_txt";
+            this.part_no_txt.Size = new System.Drawing.Size(100, 22);
+            this.part_no_txt.TabIndex = 52;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(958, 267);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(56, 12);
+            this.label14.TabIndex = 54;
+            this.label14.Text = "PART_NO";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 504);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.part_no_txt);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.chb_01);
             this.Controls.Add(this.button6);
@@ -534,6 +566,9 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ComboBox chb_01;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.TextBox part_no_txt;
+        private System.Windows.Forms.Label label14;
     }
 }
 

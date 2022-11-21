@@ -549,6 +549,51 @@ WHERE 1=1";
                 }
             }
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            string sql = @"
+SET NOCOUNT ON;
+BEGIN TRANSACTION 
+	INSERT INTO PART_LNK_SMT ([SELF_SN]
+      ,[RT_NO]
+      ,[SUPPLER_CODE]
+      ,[INCOMING_TIME]
+      ,[PART_NO]
+      ,[INTCOMING_QTY]
+      ,[UPDATE_TIME]
+      ,[EMP]
+      ,[ITEM_NO]
+      ,[DATECODE]
+      ,[LOTCODE]
+      ,[ISSUE_NO]) 
+	SELECT [SELF_SN]
+      ,[RT_NO]
+      ,[SUPPLER_CODE]
+      ,[INCOMING_TIME]
+      ,[PART_NO]
+      ,[INTCOMING_QTY]
+      ,[UPDATE_TIME]
+      ,[EMP]
+      ,[ITEM_NO]
+      ,[DATECODE]
+      ,[LOTCODE]
+      ,[ISSUE_NO]
+	FROM PART_LNK
+	WHERE SELF_SN = @SELF_SN
+
+	DELETE PART_LNK
+	WHERE SELF_SN = @SELF_SN
+COMMIT";
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("SELF_SN", part_no_txt.Text, DbType.AnsiString);
+            using (var conn = new SqlConnection(_conn))
+            {
+                //打開與資料庫的連接
+                conn.Open();
+                conn.Execute(sql, parameters);
+            }
+        }
     }
 }
 //using (var conn = new SqlConnection(_conn))
