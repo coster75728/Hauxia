@@ -265,7 +265,7 @@ WHERE TABLE_NAME = @TABLE_NAME";
         {
             public string SELF_SN { get; set; }
             public string RT_NO { get; set; }
-            public string SUPPLER_CODE { get; set; }
+            public string SUPPLIER_CODE { get; set; }
             public string INCOMING_TIME { get; set; }
             public string PART_NO { get; set; }
             public string INTCOMING_QTY { get; set; }
@@ -357,7 +357,7 @@ WHERE TABLE_NAME = @TABLE_NAME";
                 insert into[dbo].[PART_LNK]
                          ([SELF_SN]
                          ,[RT_NO]
-                         ,[SUPPLER_CODE]
+                         ,[SUPPLIER_CODE]
                          ,[INCOMING_TIME]
                          ,[PART_NO]
                          ,[INTCOMING_QTY]
@@ -549,50 +549,59 @@ WHERE 1=1";
                 }
             }
         }
-
         private void button10_Click(object sender, EventArgs e)
         {
             string sql = @"
-SET NOCOUNT ON;
-BEGIN TRANSACTION 
-	INSERT INTO PART_LNK_SMT ([SELF_SN]
-      ,[RT_NO]
-      ,[SUPPLER_CODE]
-      ,[INCOMING_TIME]
-      ,[PART_NO]
-      ,[INTCOMING_QTY]
-      ,[UPDATE_TIME]
-      ,[EMP]
-      ,[ITEM_NO]
-      ,[DATECODE]
-      ,[LOTCODE]
-      ,[ISSUE_NO]) 
-	SELECT [SELF_SN]
-      ,[RT_NO]
-      ,[SUPPLER_CODE]
-      ,[INCOMING_TIME]
-      ,[PART_NO]
-      ,[INTCOMING_QTY]
-      ,[UPDATE_TIME]
-      ,[EMP]
-      ,[ITEM_NO]
-      ,[DATECODE]
-      ,[LOTCODE]
-      ,[ISSUE_NO]
-	FROM PART_LNK
-	WHERE SELF_SN = @SELF_SN
-
-	DELETE PART_LNK
-	WHERE SELF_SN = @SELF_SN
-COMMIT";
+                   SET NOCOUNT ON;
+                   BEGIN TRANSACTION 
+	               INSERT INTO PART_LNK_SMT ([SELF_SN],[RT_NO],[SUPPLIER_CODE],[INCOMING_TIME],[PART_NO],[INTCOMING_QTY]
+                                            ,[UPDATE_TIME],[EMP],[ITEM_NO],[DATECODE],[LOTCODE],[ISSUE_NO]) 
+	                                  SELECT [SELF_SN],[RT_NO],[SUPPLIER_CODE],[INCOMING_TIME],[PART_NO],[INTCOMING_QTY]
+                                            ,[UPDATE_TIME],[EMP],[ITEM_NO],[DATECODE],[LOTCODE],[ISSUE_NO]
+	                                    FROM PART_LNK
+		                               WHERE SELF_SN = @SELF_SN
+		                              DELETE PART_LNK
+                                       WHERE SELF_SN = @SELF_SN
+                   COMMIT";
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("SELF_SN", part_no_txt.Text, DbType.AnsiString);
+            parameters.Add("SELF_SN", storage_txt.Text, DbType.AnsiString);
             using (var conn = new SqlConnection(_conn))
             {
                 //打開與資料庫的連接
                 conn.Open();
                 conn.Execute(sql, parameters);
             }
+            string sql1 = @"SELECT * FROM DBO.PART_LNK";
+            var list = SqlExecuteReader5("", sql1);
+            datagv1.DataSource = list;            
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            string sql = @"
+                   SET NOCOUNT ON;
+                   BEGIN TRANSACTION 
+	               INSERT INTO PART_LNK     ([SELF_SN],[RT_NO],[SUPPLIER_CODE],[INCOMING_TIME],[PART_NO],[INTCOMING_QTY]
+                                            ,[UPDATE_TIME],[EMP],[ITEM_NO],[DATECODE],[LOTCODE],[ISSUE_NO]) 
+	                                  SELECT [SELF_SN],[RT_NO],[SUPPLIER_CODE],[INCOMING_TIME],[PART_NO],[INTCOMING_QTY]
+                                            ,[UPDATE_TIME],[EMP],[ITEM_NO],[DATECODE],[LOTCODE],[ISSUE_NO]
+	                                    FROM PART_LNK_SMT
+		                               WHERE SELF_SN = @SELF_SN
+		                              DELETE PART_LNK
+                                       WHERE SELF_SN = @SELF_SN
+                   COMMIT";
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("SELF_SN", smt_txt.Text, DbType.AnsiString);
+            using (var conn = new SqlConnection(_conn))
+            {
+                //打開與資料庫的連接
+                conn.Open();
+                conn.Execute(sql, parameters);
+            }
+            string sql1 = @"SELECT * FROM DBO.PART_LNK";
+            var list = SqlExecuteReader5("", sql1);
+            datagv1.DataSource = list;
+
         }
     }
 }
@@ -783,7 +792,6 @@ public enum MerchntType
 
 public class AlarmModel
 {
-
     public string PART_NO { get; set; }
     public int PART_CNT { get; set; }
     public int CurrentCnt { get; set; }

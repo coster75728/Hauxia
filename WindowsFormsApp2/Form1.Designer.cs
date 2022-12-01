@@ -70,8 +70,11 @@
             this.chb_01 = new System.Windows.Forms.ComboBox();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.part_no_txt = new System.Windows.Forms.TextBox();
+            this.storage_txt = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.smt_txt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.datagv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -412,9 +415,10 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(810, 6);
+            this.button6.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button6.Location = new System.Drawing.Point(790, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(100, 36);
+            this.button6.Size = new System.Drawing.Size(120, 30);
             this.button6.TabIndex = 46;
             this.button6.Text = "庫存警示";
             this.button6.UseVisualStyleBackColor = true;
@@ -424,17 +428,18 @@
             // 
             this.chb_01.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chb_01.FormattingEnabled = true;
-            this.chb_01.Location = new System.Drawing.Point(958, 22);
+            this.chb_01.Location = new System.Drawing.Point(547, 12);
             this.chb_01.Name = "chb_01";
-            this.chb_01.Size = new System.Drawing.Size(121, 20);
+            this.chb_01.Size = new System.Drawing.Size(100, 20);
             this.chb_01.TabIndex = 49;
             this.chb_01.SelectedIndexChanged += new System.EventHandler(this.chb_01_SelectedIndexChanged);
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(958, 66);
+            this.button9.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button9.Location = new System.Drawing.Point(421, 4);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.Size = new System.Drawing.Size(120, 30);
             this.button9.TabIndex = 50;
             this.button9.Text = "報表查詢";
             this.button9.UseVisualStyleBackColor = true;
@@ -442,37 +447,70 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(958, 210);
+            this.button10.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button10.Location = new System.Drawing.Point(916, 4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.Size = new System.Drawing.Size(120, 30);
             this.button10.TabIndex = 51;
-            this.button10.Text = "button10";
+            this.button10.Text = "倉庫發料";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
-            // part_no_txt
+            // storage_txt
             // 
-            this.part_no_txt.Location = new System.Drawing.Point(958, 285);
-            this.part_no_txt.Name = "part_no_txt";
-            this.part_no_txt.Size = new System.Drawing.Size(100, 22);
-            this.part_no_txt.TabIndex = 52;
+            this.storage_txt.Location = new System.Drawing.Point(916, 68);
+            this.storage_txt.Name = "storage_txt";
+            this.storage_txt.Size = new System.Drawing.Size(100, 22);
+            this.storage_txt.TabIndex = 52;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(958, 267);
+            this.label14.Font = new System.Drawing.Font("標楷體", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label14.Location = new System.Drawing.Point(912, 45);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(56, 12);
+            this.label14.Size = new System.Drawing.Size(119, 20);
             this.label14.TabIndex = 54;
-            this.label14.Text = "PART_NO";
+            this.label14.Text = "Storage_SN";
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button11.Location = new System.Drawing.Point(1042, 4);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(120, 30);
+            this.button11.TabIndex = 55;
+            this.button11.Text = "SMT退料";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("標楷體", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label15.Location = new System.Drawing.Point(1038, 48);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(75, 20);
+            this.label15.TabIndex = 56;
+            this.label15.Text = "Smt_SN";
+            // 
+            // smt_txt
+            // 
+            this.smt_txt.Location = new System.Drawing.Point(1042, 68);
+            this.smt_txt.Name = "smt_txt";
+            this.smt_txt.Size = new System.Drawing.Size(100, 22);
+            this.smt_txt.TabIndex = 57;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 504);
+            this.Controls.Add(this.smt_txt);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.button11);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.part_no_txt);
+            this.Controls.Add(this.storage_txt);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.chb_01);
@@ -567,8 +605,11 @@
         private System.Windows.Forms.ComboBox chb_01;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.TextBox part_no_txt;
+        private System.Windows.Forms.TextBox storage_txt;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox smt_txt;
     }
 }
 
