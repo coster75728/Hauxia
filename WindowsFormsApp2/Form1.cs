@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -449,7 +450,20 @@ WHERE TABLE_NAME = @TABLE_NAME";
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                var txt_control = GetNextControl(this.ActiveControl, true) as TextBox;
+
+                while (txt_control != null && txt_control.ReadOnly)
+                {
+                    txt_control = GetNextControl(this.ActiveControl, true) as TextBox;
+                }
+
+                if (txt_control != null)
+                {
+                    txt_control.Focus();
+                }
+
+                
+                //this.SelectNextControl(this.ActiveControl, true, true, true, true);
             }
         }
         private void button4_Click(object sender, EventArgs e)
@@ -578,6 +592,11 @@ WHERE 1=1";
 
         private void button11_Click(object sender, EventArgs e)
         {
+            Archive_Part_Link();
+        }
+
+        private void Archive_Part_Link()
+        {
             string sql = @"
                    SET NOCOUNT ON;
                    BEGIN TRANSACTION 
@@ -587,7 +606,7 @@ WHERE 1=1";
                                             ,[UPDATE_TIME],[EMP],[ITEM_NO],[DATECODE],[LOTCODE],[ISSUE_NO]
 	                                    FROM PART_LNK_SMT
 		                               WHERE SELF_SN = @SELF_SN
-		                              DELETE PART_LNK
+		                              DELETE PART_LNK_SMT
                                        WHERE SELF_SN = @SELF_SN
                    COMMIT";
             DynamicParameters parameters = new DynamicParameters();
@@ -601,7 +620,18 @@ WHERE 1=1";
             string sql1 = @"SELECT * FROM DBO.PART_LNK";
             var list = SqlExecuteReader5("", sql1);
             datagv1.DataSource = list;
+        }
 
+        private void smt_txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                backlog_smt.Text = smt_txt.Text;
+                //File.app
+                Archive_Part_Link();
+                //MessageBox.Show(smt_txt.Text);
+                smt_txt.Text = string.Empty;
+            }
         }
     }
 }

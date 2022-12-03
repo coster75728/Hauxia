@@ -75,6 +75,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.smt_txt = new System.Windows.Forms.TextBox();
+            this.backlog_smt = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.datagv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -500,12 +501,22 @@
             this.smt_txt.Name = "smt_txt";
             this.smt_txt.Size = new System.Drawing.Size(100, 22);
             this.smt_txt.TabIndex = 57;
+            this.smt_txt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.smt_txt_KeyDown);
+            // 
+            // backlog_smt
+            // 
+            this.backlog_smt.AutoSize = true;
+            this.backlog_smt.Location = new System.Drawing.Point(1040, 103);
+            this.backlog_smt.Name = "backlog_smt";
+            this.backlog_smt.Size = new System.Drawing.Size(0, 12);
+            this.backlog_smt.TabIndex = 58;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 504);
+            this.Controls.Add(this.backlog_smt);
             this.Controls.Add(this.smt_txt);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.button11);
@@ -610,6 +621,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox smt_txt;
+        private System.Windows.Forms.Label backlog_smt;
     }
 }
 
