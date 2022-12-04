@@ -53,11 +53,18 @@ namespace WindowsFormsApp2
 
              */
 
-            chb_01.DataSource = new[] {
+            chb_01.DataSource = new[]
+            {
                  "RT_BASE",
                  "RT_DETAIL",
-                 "PART_LNK"
+                 "PART_LNK",
+                 "PART_LNK_SMT"
             };
+            /*var res = conn.Query<AlarmModel>(sql);
+            foreach (var item in res)
+            {
+                sb.AppendLine($"PART_NO;{item.PART_NO} 目前庫存數量; {item.CurrentCnt}  庫存警戒值; {item.PART_CNT}");
+            }*/
         }
 
 
@@ -209,7 +216,7 @@ WHERE TABLE_NAME = @TABLE_NAME";
         private void button5_Click(object sender, EventArgs e)
         {
             //string password = textBox1.Text;
-            string sql = @"SELECT *FROM DBO.PART_LNK";
+            string sql = @"SELECT * FROM DBO.PART_LNK ORDER BY SELF_SN";
 
             //int,double,floar...
             //stack/heap
@@ -490,25 +497,18 @@ WHERE  a.PART_CNT>t1.CurrentCnt
                 var res=conn.Query<AlarmModel>(sql);
                 foreach (var item in res)
                 {
-                    sb.AppendLine($"PART_NO;{item.PART_NO} CurrentCnt; {item.CurrentCnt}  PART_CNT; {item.PART_CNT}");
+                    sb.AppendLine($"PART_NO;{item.PART_NO} 目前庫存數量; {item.CurrentCnt}  庫存警戒值; {item.PART_CNT}");
                 }
             }
 
             MessageBox.Show(sb.ToString());
-            /*
-             
-SELECT * 
-FROM PART_LNK_ALARM a
-INNER JOIN (
-	SELECT COUNT(SELF_SN) cnt,PART_NO
-	FROM [MYDB].[dbo].[PART_LNK]
-	GROUP BY PART_NO
-) t1 ON a.PART_NO = t1.PART_NO 
-WHERE  a.PART_CNT>t1.cnt
-
-             */
-
-
+            /*SELECT * FROM PART_LNK_ALARM a
+              INNER JOIN (
+	              SELECT COUNT(SELF_SN) cnt,PART_NO
+	              FROM [MYDB].[dbo].[PART_LNK]
+	              GROUP BY PART_NO
+                         ) t1 ON a.PART_NO = t1.PART_NO 
+                  WHERE  a.PART_CNT>t1.cnt*/
         }
 
         private void chb_01_SelectedIndexChanged(object sender, EventArgs e)
@@ -533,9 +533,7 @@ WHERE  a.PART_CNT>t1.cnt
         {
             var showColumns = GetShowColumns(chb_01.SelectedValue.ToString()).Select(x => x.ToLower());
             DynamicParameters parameters = new DynamicParameters();
-            string sql = $@"SELECT *
-FROM {chb_01.SelectedValue}
-WHERE 1=1";
+            string sql = $@"SELECT *FROM {chb_01.SelectedValue} WHERE 1=1";
             foreach (var item in textboxDictionary)
             {
                 if (showColumns.Any(x => x == item.Key) && !string.IsNullOrEmpty(item.Value.Text))
@@ -544,7 +542,6 @@ WHERE 1=1";
                     sql += $" AND {item.Key} = @{item.Key}";
                 }
             }
-
             using (var conn = new SqlConnection(_conn))
             {
                 //打開與資料庫的連接
@@ -561,9 +558,17 @@ WHERE 1=1";
                 {
                     datagv1.DataSource = conn.Query<DataModel5>(sql, parameters);
                 }
+                else if (chb_01.SelectedValue.ToString() == "PART_LNK_SMT")
+                {
+                    datagv1.DataSource = conn.Query<DataModel5>(sql, parameters);
+                }
             }
         }
         private void button10_Click(object sender, EventArgs e)
+        {
+            Archive_Part_Link1();
+        }
+        private void Archive_Part_Link1()
         {
             string sql = @"
                    SET NOCOUNT ON;
@@ -588,14 +593,14 @@ WHERE 1=1";
             string sql1 = @"SELECT * FROM DBO.PART_LNK";
             var list = SqlExecuteReader5("", sql1);
             datagv1.DataSource = list;            
-        }
+        }      
 
         private void button11_Click(object sender, EventArgs e)
         {
-            Archive_Part_Link();
+            Archive_Part_Link2();
         }
 
-        private void Archive_Part_Link()
+        private void Archive_Part_Link2()
         {
             string sql = @"
                    SET NOCOUNT ON;
@@ -617,21 +622,43 @@ WHERE 1=1";
                 conn.Open();
                 conn.Execute(sql, parameters);
             }
-            string sql1 = @"SELECT * FROM DBO.PART_LNK";
+            string sql1 = @"SELECT * FROM DBO.PART_LNK_SMT";
             var list = SqlExecuteReader5("", sql1);
             datagv1.DataSource = list;
         }
-
         private void smt_txt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 backlog_smt.Text = smt_txt.Text;
                 //File.app
-                Archive_Part_Link();
+                Archive_Part_Link2();
                 //MessageBox.Show(smt_txt.Text);
                 smt_txt.Text = string.Empty;
             }
+        }
+        private void storage_txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                backlog_storage.Text = storage_txt.Text;
+                //File.app
+                Archive_Part_Link1();
+                //MessageBox.Show(smt_txt.Text);
+                storage_txt.Text = string.Empty;
+            }
+        }
+        private void button12_Click(object sender, EventArgs e)
+        {
+            //string password = textBox1.Text;
+            string sql = @"SELECT * FROM DBO.PART_LNK_SMT ORDER BY SELF_SN";
+
+            //int,double,floar...
+            //stack/heap
+
+            //建立SqlConnection物件
+            var list = SqlExecuteReader5("", sql);
+            datagv1.DataSource = list;
         }
     }
 }
@@ -811,7 +838,6 @@ WHERE 1=1";
 //        //user_Result1.Text = String.Join("\n", list);
 //    }
 //}
-
 public enum MerchntType
 {
     None,
@@ -819,7 +845,6 @@ public enum MerchntType
     SUPPLIER,
     PART
 }
-
 public class AlarmModel
 {
     public string PART_NO { get; set; }

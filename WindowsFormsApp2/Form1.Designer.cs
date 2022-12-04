@@ -76,6 +76,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.smt_txt = new System.Windows.Forms.TextBox();
             this.backlog_smt = new System.Windows.Forms.Label();
+            this.backlog_storage = new System.Windows.Forms.Label();
+            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.datagv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,7 +127,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(120, 30);
             this.button5.TabIndex = 10;
-            this.button5.Text = "料號連結";
+            this.button5.Text = "倉儲庫存";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
@@ -429,7 +431,7 @@
             // 
             this.chb_01.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.chb_01.FormattingEnabled = true;
-            this.chb_01.Location = new System.Drawing.Point(547, 12);
+            this.chb_01.Location = new System.Drawing.Point(675, 12);
             this.chb_01.Name = "chb_01";
             this.chb_01.Size = new System.Drawing.Size(100, 20);
             this.chb_01.TabIndex = 49;
@@ -438,7 +440,7 @@
             // button9
             // 
             this.button9.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button9.Location = new System.Drawing.Point(421, 4);
+            this.button9.Location = new System.Drawing.Point(549, 4);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(120, 30);
             this.button9.TabIndex = 50;
@@ -463,6 +465,7 @@
             this.storage_txt.Name = "storage_txt";
             this.storage_txt.Size = new System.Drawing.Size(100, 22);
             this.storage_txt.TabIndex = 52;
+            this.storage_txt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.storage_txt_KeyDown);
             // 
             // label14
             // 
@@ -511,11 +514,32 @@
             this.backlog_smt.Size = new System.Drawing.Size(0, 12);
             this.backlog_smt.TabIndex = 58;
             // 
+            // backlog_storage
+            // 
+            this.backlog_storage.AutoSize = true;
+            this.backlog_storage.Location = new System.Drawing.Point(916, 103);
+            this.backlog_storage.Name = "backlog_storage";
+            this.backlog_storage.Size = new System.Drawing.Size(0, 12);
+            this.backlog_storage.TabIndex = 59;
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("標楷體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button12.Location = new System.Drawing.Point(423, 4);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(120, 30);
+            this.button12.TabIndex = 60;
+            this.button12.Text = "SMT庫存";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 504);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.backlog_storage);
             this.Controls.Add(this.backlog_smt);
             this.Controls.Add(this.smt_txt);
             this.Controls.Add(this.label15);
@@ -622,6 +646,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox smt_txt;
         private System.Windows.Forms.Label backlog_smt;
+        private System.Windows.Forms.Label backlog_storage;
+        private System.Windows.Forms.Button button12;
     }
 }
 
